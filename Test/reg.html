@@ -15,12 +15,12 @@
 				margin-top: 20px;
 			}
 			.mui-input-group label {
-				width: 22%;
+				width: 30%;
 			}
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
+				width: 70%;
 			}
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
@@ -52,7 +52,7 @@
 					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="Please enter password">
 				</div>
 				<div class="mui-input-row">
-					<label>Comfirm Password</label>
+					<label>Comfirm</label>
 					<input id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="Please confirm password">
 				</div>
 				<div class="mui-input-row">
@@ -84,6 +84,7 @@
 							account: accountBox.value,
 							password: passwordBox.value,
 							email: emailBox.value
+							 
 						};
 						var passwordConfirm = passwordConfirmBox.value;
 						if (passwordConfirm != regInfo.password) {

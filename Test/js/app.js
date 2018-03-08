@@ -13,10 +13,10 @@
 		loginInfo.account = loginInfo.account || '';
 		loginInfo.password = loginInfo.password || '';
 		if (loginInfo.account.length < 5) {
-			return callback('账号最短为 5 个字符');
+			return callback('Account needs at least 5 characters');
 		}
 		if (loginInfo.password.length < 6) {
-			return callback('密码最短为 6 个字符');
+			return callback('Password needs at least 6 characters');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 		var authed = users.some(function(user) {
@@ -45,14 +45,15 @@
 		regInfo = regInfo || {};
 		regInfo.account = regInfo.account || '';
 		regInfo.password = regInfo.password || '';
+		regInfo.bankAccounts = [];
 		if (regInfo.account.length < 5) {
-			return callback('用户名最短需要 5 个字符');
+			return callback('Account needs at least 5 characters');
 		}
 		if (regInfo.password.length < 6) {
-			return callback('密码最短需要 6 个字符');
+			return callback('Password needs at least 6 characters');
 		}
 		if (!checkEmail(regInfo.email)) {
-			return callback('邮箱地址不合法');
+			return callback('Illegal e-mail address');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 		users.push(regInfo);
@@ -90,7 +91,7 @@
 	owner.forgetPassword = function(email, callback) {
 		callback = callback || $.noop;
 		if (!checkEmail(email)) {
-			return callback('邮箱地址不合法');
+			return callback('Illegal e-mail address');
 		}
 		return callback(null, '新的随机密码已经发送到您的邮箱，请查收邮件。');
 	};
