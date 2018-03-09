@@ -59,6 +59,26 @@
 		localStorage.setItem('$users', JSON.stringify(users));
 		return callback();
 	};
+	
+	/**
+	 * 转帐功能
+	 **/
+	owner.transfer = function(transInfo, callback){
+		callback = callback || $.noop;
+		transInfo = transInfo || {};
+		transInfo.From = transInfo.From || '';
+		transInfo.To = transInfo.To || '';
+		transInfo.Amount = transInfo.Amount || '';
+		var users = JSON.parse(localStorage.getItem('$users') || '[]');
+		var state = owner.getState();
+		
+		if(transInfo.Amount == ''){
+			return callback('Amount can not be null!');
+		}
+		if(transInfo.From == ''){
+			return calback('Please enter valid account ');
+		}
+	}
 
 	/**
 	 * 获取当前状态
