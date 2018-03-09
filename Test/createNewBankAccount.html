@@ -15,12 +15,12 @@
 				margin-top: 20px;
 			}
 			.mui-input-group label {
-				width: 30%;
+				width: 45%;
 			}
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 70%;
+				width: 55%;
 			}
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
@@ -39,7 +39,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">Sign up</h1>
+			<h1 class="mui-title">Create New Bank Account</h1>
 		</header>
 		<div class="mui-content">
 			<form class="mui-input-group">
@@ -48,23 +48,23 @@
 					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="Please enter account">
 				</div>
 				<div class="mui-input-row">
-					<label>Password</label>
-					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="Please enter password">
+					<label>Currency Type</label>
+					<input id='currency' type="text" class="mui-input-clear mui-input" placeholder="Please enter currency type">
 				</div>
 				<div class="mui-input-row">
-					<label>Comfirm</label>
-					<input id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="Please confirm password">
+					<label>Financial Institute</label>
+					<input id='financial_institute' type="text" class="mui-input-clear mui-input" placeholder="Institute of the account">
 				</div>
 				<div class="mui-input-row">
-					<label>E-mail</label>
-					<input id='email' type="email" class="mui-input-clear mui-input" placeholder="Please enter E-mail">
+					<label>Account Type</label>
+					<input id='bank_account_type' type="text" class="mui-input-clear mui-input" placeholder="Please enter the account type">
 				</div>
 			</form>
 			<div class="mui-content-padded">
-				<button id='reg' class="mui-btn mui-btn-block mui-btn-primary">Sign up</button>
+				<button id='createNewBankAccount' class="mui-btn mui-btn-block mui-btn-primary">Done !</button>
 			</div>
 			<div class="mui-content-padded">
-				<p>Registration will be stored in local file</p>
+				<p>Information will be stored in local file</p>
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
@@ -74,45 +74,37 @@
 				$.init();
 				$.plusReady(function() {
 					var settings = app.getSettings();
-					var regButton = doc.getElementById('reg');
+					
+					//get the decleared variables
+					var doneButton = doc.getElementById('createNewBankAccount');
 					var accountBox = doc.getElementById('account');
-					var passwordBox = doc.getElementById('password');
-					var passwordConfirmBox = doc.getElementById('password_confirm');
-					var emailBox = doc.getElementById('email');
-					regButton.addEventListener('tap', function(event) {
-						var regInfo = {
+					var currencyTypeBox = doc.getElementById('currency');
+					var instituteBox = doc.getElementById('financial_institute');
+					var bankAccountTypeBox = doc.getElementById('bank_account_type');
+					
+					//the event happens when tap the Done! button
+					doneButton.addEventListener('tap', function(event) {
+						
+						//pass the info into an object block
+						var bankAccountInfo = {
 							account: accountBox.value,
-							password: passwordBox.value,
-							email: emailBox.value
-							 
+							currency: currencyTypeBox.value,
+							financialInstitute: instituteBox.value,
+							bankAccountType: accountTypeBox.value
 						};
-						var passwordConfirm = passwordConfirmBox.value;
-						if (passwordConfirm != regInfo.password) {
-							plus.nativeUI.toast('Password not confirmed');
-							return;
-						}
+						
+						//改到这里了，下面的要看这个reg，需要查如何与数据交流
+						
 						app.reg(regInfo, function(err) {
 							if (err) {
 								plus.nativeUI.toast(err);
 								return;
 							}
-							plus.nativeUI.toast('Registration succeed');
-							/*
-							 * 注意：
-							 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
-							 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
-							 */
+							plus.nativeUI.toast('Account created!');
 							plus.webview.getLaunchWebview().show("pop-in",200,function () {
 								plus.webview.currentWebview().close("none");
 							});
-							//若启动页不是登录页，则需通过如下方式打开登录页
-//							$.openWindow({
-//								url: 'login.html',
-//								id: 'login',
-//								show: {
-//									aniShow: 'pop-in'
-//								}
-//							});
+							
 						});
 					});
 				});
