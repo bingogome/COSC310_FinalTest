@@ -25,14 +25,14 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">解锁</h1>
+			<h1 class="mui-title">Locker</h1>
 		</header>
 		<div class="mui-content">
 			<div class="mui-content-padded" style="margin: 10px 0px;">
 				<div class="mui-locker" data-locker-options='{"ringColor":"rgba(221,221,221,1)","fillColor":"#ffffff","pointColor":"rgba(0,136,204,1)","lineColor":"rgba(0,136,204,1)"}' data-locker-width='320' data-locker-height='320'>
 				</div>
 			</div>
-			<a id='forget'>忘记手势密码？</a>
+			<a id='forget'>Forgot unlock pattern?</a>
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.locker.js"></script>
@@ -94,7 +94,7 @@
 							tryNumber--;
 							rs.sender.clear();
 							if (tryNumber > 0) {
-								plus.nativeUI.toast('解锁手势错误，还能尝试 ' + tryNumber + ' 次。');
+								plus.nativeUI.toast('Unlock pattern wrong. You can try ' + tryNumber + ' more times.');
 							} else {
 								clearStateAndToLogin();
 							}
@@ -106,7 +106,7 @@
 						if (backButtonPress > 1) {
 							plus.runtime.quit();
 						} else {
-							plus.nativeUI.toast('再按一次退出应用');
+							plus.nativeUI.toast('Tap one more time to quit');
 						}
 						setTimeout(function() {
 							backButtonPress = 0;
