@@ -11,28 +11,33 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
+			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
+			
 			.mui-input-group label {
 				width: 45%;
 			}
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 55%;
 			}
+			
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
+			
 			.mui-content-padded {
 				margin-top: 25px;
 			}
+			
 			.mui-btn {
 				padding: 10px;
 			}
-			
 		</style>
 	</head>
 
@@ -74,17 +79,17 @@
 				$.init();
 				$.plusReady(function() {
 					var settings = app.getSettings();
-					
+
 					//get the decleared variables
 					var doneButton = doc.getElementById('createNewBankAccount');
 					var accountBox = doc.getElementById('account');
 					var currencyTypeBox = doc.getElementById('currency');
 					var instituteBox = doc.getElementById('financial_institute');
 					var bankAccountTypeBox = doc.getElementById('bank_account_type');
-					
+
 					//the event happens when tap the Done! button
 					doneButton.addEventListener('tap', function(event) {
-						
+
 						//pass the info into an object block
 						var bankAccountInfo = {
 							account: accountBox.value,
@@ -92,20 +97,24 @@
 							financialInstitute: instituteBox.value,
 							bankAccountType: accountTypeBox.value
 						};
-						
-						//改到这里了，下面的要看这个reg，需要查如何与数据交流
-						
-						app.reg(regInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
-							}
-							plus.nativeUI.toast('Account created!');
-							plus.webview.getLaunchWebview().show("pop-in",200,function () {
-								plus.webview.currentWebview().close("none");
+
+
+						app.createNewBankAccount(
+							bankAccountInfo,
+							function(err) {
+								if(err) {
+									plus.nativeUI.toast(err);
+									return;
+								}
+								plus.nativeUI.toast('Account created!');
+								plus.webview.getLaunchWebview().show(
+									"pop-in", 200,
+									function() {
+										plus.webview.currentWebview().close("none");
+									}
+								);
+
 							});
-							
-						});
 					});
 				});
 			}(mui, document));
