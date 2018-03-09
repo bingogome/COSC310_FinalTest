@@ -64,14 +64,26 @@
 	owner.createNewBankAccount = function(bankAccountInfo, callback) {
 		callback = callback || $.noop;
 		bankAccountInfo = bankAccountInfo || {};
-		bankAccountInfo.account = bankAccountInfo.account || '';
 		bankAccountInfo.currency = bankAccountInfo.currency || '';
 		bankAccountInfo.financialInstitute = financialInstitute || '';
 		bankAccountInfo.bankAccountType = bankAccountType || '';
-
+		bankAccountInfo.transactions = [];
+		
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		//to-do 这里写存账号信息
+		//to-do save account info
 
+		$.each(users, function(i, record) {
+			var currentLogedIn = owner.getState();
+			var currentLogedInAccount = currentLogedIn.account;
+			if(record['account'] == currentLogedInAccount) {
+				var currentAccounts = record['bankAccounts']; // accounts[]
+				currentAccounts = currentAccounts.push(bankAccountInfo);
+				record['bankAccounts'] = currentAccounts;
+				//{account,currency,institute,type}, {account,currency,institute,type}-> accounts[]
+			}
+		});
+
+	
 		localStorage.setItem('$users', JSON.stringify(users));
 		return callback();
 	};
