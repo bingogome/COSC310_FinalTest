@@ -12,20 +12,20 @@
 		loginInfo = loginInfo || {};
 		loginInfo.account = loginInfo.account || '';
 		loginInfo.password = loginInfo.password || '';
-		if (loginInfo.account.length < 5) {
+		if(loginInfo.account.length < 5) {
 			return callback('Account needs at least 5 characters');
 		}
-		if (loginInfo.password.length < 6) {
+		if(loginInfo.password.length < 6) {
 			return callback('Password needs at least 6 characters');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 		var authed = users.some(function(user) {
 			return loginInfo.account == user.account && loginInfo.password == user.password;
 		});
-		if (authed) {
+		if(authed) {
 			return owner.createState(loginInfo.account, callback);
 		} else {
-			return callback('用户名或密码错误');
+			return callback('Wrong account or password!');
 		}
 	};
 
@@ -46,17 +46,32 @@
 		regInfo.account = regInfo.account || '';
 		regInfo.password = regInfo.password || '';
 		regInfo.bankAccounts = [];
-		if (regInfo.account.length < 5) {
+		if(regInfo.account.length < 5) {
 			return callback('Account needs at least 5 characters');
 		}
-		if (regInfo.password.length < 6) {
+		if(regInfo.password.length < 6) {
 			return callback('Password needs at least 6 characters');
 		}
-		if (!checkEmail(regInfo.email)) {
+		if(!checkEmail(regInfo.email)) {
 			return callback('Illegal e-mail address');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 		users.push(regInfo);
+		localStorage.setItem('$users', JSON.stringify(users));
+		return callback();
+	};
+
+	owner.createNewBankAccount = function(bankAccountInfo, callback) {
+		callback = callback || $.noop;
+		bankAccountInfo = bankAccountInfo || {};
+		bankAccountInfo.account = bankAccountInfo.account || '';
+		bankAccountInfo.currency = bankAccountInfo.currency || '';
+		bankAccountInfo.financialInstitute = financialInstitute || '';
+		bankAccountInfo.bankAccountType = bankAccountType || '';
+
+		var users = JSON.parse(localStorage.getItem('$users') || '[]');
+		//to-do 这里写存账号信息
+
 		localStorage.setItem('$users', JSON.stringify(users));
 		return callback();
 	};
@@ -82,7 +97,7 @@
 
 	var checkEmail = function(email) {
 		email = email || '';
-		return (email.length > 3 && email.indexOf('@') > -1);
+		return(email.length > 3 && email.indexOf('@') > -1);
 	};
 
 	/**
@@ -90,10 +105,10 @@
 	 **/
 	owner.forgetPassword = function(email, callback) {
 		callback = callback || $.noop;
-		if (!checkEmail(email)) {
+		if(!checkEmail(email)) {
 			return callback('Illegal e-mail address');
 		}
-		return callback(null, '新的随机密码已经发送到您的邮箱，请查收邮件。');
+		return callback(null, 'New password has been sent to your email!');
 	};
 
 	/**
@@ -108,17 +123,17 @@
 	 * 设置应用本地配置
 	 **/
 	owner.getSettings = function() {
-			var settingsText = localStorage.getItem('$settings') || "{}";
-			return JSON.parse(settingsText);
-		}
-		/**
-		 * 获取本地是否安装客户端
-		 **/
+		var settingsText = localStorage.getItem('$settings') || "{}";
+		return JSON.parse(settingsText);
+	}
+	/**
+	 * 获取本地是否安装客户端
+	 **/
 	owner.isInstalled = function(id) {
-		if (id === 'qihoo' && mui.os.plus) {
+		if(id === 'qihoo' && mui.os.plus) {
 			return true;
 		}
-		if (mui.os.android) {
+		if(mui.os.android) {
 			var main = plus.android.runtimeMainActivity();
 			var packageManager = main.getPackageManager();
 			var PackageManager = plus.android.importClass(packageManager)
@@ -129,9 +144,9 @@
 			}
 			try {
 				return packageManager.getPackageInfo(packageName[id], PackageManager.GET_ACTIVITIES);
-			} catch (e) {}
+			} catch(e) {}
 		} else {
-			switch (id) {
+			switch(id) {
 				case "qq":
 					var TencentOAuth = plus.ios.import("TencentOAuth");
 					return TencentOAuth.iphoneQQInstalled();

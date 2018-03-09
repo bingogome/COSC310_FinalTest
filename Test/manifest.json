@@ -40,7 +40,7 @@
 		"Payment": {},
 		"Contacts": {},
 		"Statistic": {},
-		"Messaging": {}
+		"Messaging": {},"Webview":{},"NativeUI":{},"Navigator":{}
 	},
 	"plus": {
 		"splashscreen": {

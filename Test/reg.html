@@ -11,28 +11,33 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
+			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
+			
 			.mui-input-group label {
 				width: 30%;
 			}
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 70%;
 			}
+			
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
+			
 			.mui-content-padded {
 				margin-top: 25px;
 			}
+			
 			.mui-btn {
 				padding: 10px;
 			}
-			
 		</style>
 	</head>
 
@@ -84,15 +89,15 @@
 							account: accountBox.value,
 							password: passwordBox.value,
 							email: emailBox.value
-							 
+
 						};
 						var passwordConfirm = passwordConfirmBox.value;
-						if (passwordConfirm != regInfo.password) {
+						if(passwordConfirm != regInfo.password) {
 							plus.nativeUI.toast('Password not confirmed');
 							return;
 						}
 						app.reg(regInfo, function(err) {
-							if (err) {
+							if(err) {
 								plus.nativeUI.toast(err);
 								return;
 							}
@@ -102,17 +107,17 @@
 							 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
 							 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
 							 */
-							plus.webview.getLaunchWebview().show("pop-in",200,function () {
+							plus.webview.getLaunchWebview().show("pop-in", 200, function() {
 								plus.webview.currentWebview().close("none");
 							});
 							//若启动页不是登录页，则需通过如下方式打开登录页
-//							$.openWindow({
-//								url: 'login.html',
-//								id: 'login',
-//								show: {
-//									aniShow: 'pop-in'
-//								}
-//							});
+							//							$.openWindow({
+							//								url: 'login.html',
+							//								id: 'login',
+							//								show: {
+							//									aniShow: 'pop-in'
+							//								}
+							//							});
 						});
 					});
 				});
