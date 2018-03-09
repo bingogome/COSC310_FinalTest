@@ -50,12 +50,7 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>From:</label>
-					<select id="fromAccount">
-						<option value=""></option>
-						<option value=""></option>
-						<option value=""></option>
-						<option value=""></option>
-					</select>
+					<input id='fromAccount' type="number" class="mui-input-clear mui-input" placeholder="Please enter target account">
 				</div>
 				<div class="mui-input-row">
 					<label>To:</label>
@@ -70,7 +65,7 @@
 				<button id='transfer' class="mui-btn mui-btn-block mui-btn-primary">Transfer</button>
 			</div>
 			<div class="mui-content-padded">
-				<p>The transaction data will be stored in local file</p>
+				<p>Registration will be stored in local file</p>
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
@@ -79,44 +74,39 @@
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var settings = app.getSettings();
-					var transferButton = doc.getElementById('transfer');
-					var frombox = doc.getElementById('fromAccount');
-					var toBox = doc.getElementById('toAccount');
-					var amountbox = doc.getElementById('amount');
-					transferButton.addEventListener('tap', function(event) {
-						var transferInfo = {
-							From: fromAccount.value,
-							To: toAccount.value,
-							Amount: amount.value
+				var settings = app.getSettings();
+				var transferButton = doc.getElementById('transfer');
+				var frombox = doc.getElementById('fromAccount');
+				var toBox = doc.getElementById('toAccount');
+				var amountbox = doc.getElementById('amount');
+				transferButton.addEventListener('tap', function(event) {
+						var transInfo = {
+							From: frombox.value,
+							To: toBox.value,
+							Amount: amountbox.value
 						};
-						var passwordConfirm = passwordConfirmBox.value;
-						if(passwordConfirm != regInfo.password) {
-							plus.nativeUI.toast('Password not confirmed');
-							return;
-						}
-						app.reg(regInfo, function(err) {
-							if(err) {
+						app.transfer(transInfo, function(err) {
+							if (err) {
 								plus.nativeUI.toast(err);
 								return;
 							}
-							plus.nativeUI.toast('Registration succeed');
+							plus.nativeUI.toast('Transfer succeed');
 							/*
 							 * 注意：
 							 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
 							 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
 							 */
-							plus.webview.getLaunchWebview().show("pop-in", 200, function() {
+							plus.webview.getLaunchWebview().show("pop-in",200,function () {
 								plus.webview.currentWebview().close("none");
 							});
 							//若启动页不是登录页，则需通过如下方式打开登录页
-							//							$.openWindow({
-							//								url: 'login.html',
-							//								id: 'login',
-							//								show: {
-							//									aniShow: 'pop-in'
-							//								}
-							//							});
+//							$.openWindow({
+//								url: 'login.html',
+//								id: 'login',
+//								show: {
+//									aniShow: 'pop-in'
+//								}
+//							});
 						});
 					});
 				});
