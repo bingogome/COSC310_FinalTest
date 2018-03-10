@@ -12,17 +12,17 @@
 		loginInfo = loginInfo || {};
 		loginInfo.account = loginInfo.account || '';
 		loginInfo.password = loginInfo.password || '';
-		if (loginInfo.account.length < 5) {
+		if(loginInfo.account.length < 5) {
 			return callback('账号最短为 5 个字符');
 		}
-		if (loginInfo.password.length < 6) {
+		if(loginInfo.password.length < 6) {
 			return callback('密码最短为 6 个字符');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 		var authed = users.some(function(user) {
 			return loginInfo.account == user.account && loginInfo.password == user.password;
 		});
-		if (authed) {
+		if(authed) {
 			return owner.createState(loginInfo.account, callback);
 		} else {
 			return callback('用户名或密码错误');
@@ -45,13 +45,13 @@
 		regInfo = regInfo || {};
 		regInfo.account = regInfo.account || '';
 		regInfo.password = regInfo.password || '';
-		if (regInfo.account.length < 5) {
+		if(regInfo.account.length < 5) {
 			return callback('用户名最短需要 5 个字符');
 		}
-		if (regInfo.password.length < 6) {
+		if(regInfo.password.length < 6) {
 			return callback('密码最短需要 6 个字符');
 		}
-		if (!checkEmail(regInfo.email)) {
+		if(!checkEmail(regInfo.email)) {
 			return callback('邮箱地址不合法');
 		}
 		var users = JSON.parse(localStorage.getItem('$users') || '[]');
@@ -59,26 +59,95 @@
 		localStorage.setItem('$users', JSON.stringify(users));
 		return callback();
 	};
-	
+
 	/**
 	 * 转帐功能
 	 **/
-	owner.transfer = function(transInfo, callback){
+	owner.transfer = function(transInfo, callback) {
 		callback = callback || $.noop;
 		transInfo = transInfo || {};
 		transInfo.From = transInfo.From || '';
 		transInfo.To = transInfo.To || '';
 		transInfo.Amount = transInfo.Amount || '';
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		var state = owner.getState();
-		
-		if(transInfo.Amount == ''){
+		if(transInfo.From == '') {
+			return callback('Please enter valid account ');
+		}
+		if(transInfo.To == '') {
+			return callback('Please enter valid account to receive money.');
+		}
+		if(transInfo.Amount == '') {
 			return callback('Amount can not be null!');
 		}
-		if(transInfo.From == ''){
-			return calback('Please enter valid account ');
+		/*Testing
+		 * //var testfile1 = {"bankaccount1":"01","bankaccount2":"02","balance1":"999","balance2":"20"};
+		//localStorage.setItem("$testfile",JSON.stringify(testfile1));
+		//var testfile = JSON.parse(localStorage.getItem('$testfile') || '[]');
+		 **/
+		var users = JSON.parse(localStorage.getItem('$users') || '[]');
+		//var state = owner.getState();
+		//var currentuser = owner.getObjects(users,"account",state.account);
+		var fromaccount = owner.getObjects(users,"bankaccount1",transInfo.From);
+		if(fromaccount == ''){
+			return callback('Please enter valid from account to transfer money.');
 		}
+		var toaccount = owner.getObjects(users,"bankaccount2",transInfo.To);
+		if(toaccount ==''){
+			return callback('Please enter valid account to receive money.');
+		}
+		var fromaccount_balance = users.balance1;
+		var toaccount_balance = users.balance2;
+		if(fromaccount_balance<transInfo.Amount){
+			return callback('Not enough money in your account, please enter valid amount.');
+		}else{
+			fromaccount_balance = fromaccount_balance - transInfo.Amount;
+			users.balance1 = fromaccount_balance;
+			toaccount_balance = toaccount_balance -(-transInfo.Amount);
+			users.balance2=toaccount_balance;
+			localStorage.setItem('$users', JSON.stringify(users));
+		}
+		
+
+		
 	}
+
+	/**loop through JSON, 
+	 * return an array of objects according to key, value, or key and value matching
+	 * 
+	 **/
+	owner.getObjects=function(obj, key, val) {
+		var objects = [];
+		for(var i in obj) {
+			if(!obj.hasOwnProperty(i)) continue;
+			if(typeof obj[i] == 'object') {
+				objects = objects.concat(getObjects(obj[i], key, val));
+			} else
+				//if key matches and value matches or if key matches and value is not passed (eliminating the case where key matches but passed value does not)
+				if(i == key && obj[i] == val || i == key && val == '') { //
+					objects.push(obj);
+				} else if(obj[i] == val && key == '') {
+				//only add if the object is not already in the array
+				if(objects.lastIndexOf(obj) == -1) {
+					objects.push(obj);
+				}
+			}
+		}
+		return objects;
+	}
+	/**search JSON, return an array of values that match on a certain key
+	 * 
+	 */
+owner.getValues=function(obj, key) {
+    var objects = [];
+    for (var i in obj) {
+        if (!obj.hasOwnProperty(i)) continue;
+        if (typeof obj[i] == 'object') {
+            objects = objects.concat(getValues(obj[i], key));
+        } else if (i == key) {
+            objects.push(obj[i]);
+        }
+    }
+    return objects;
+}
 
 	/**
 	 * 获取当前状态
@@ -101,7 +170,7 @@
 
 	var checkEmail = function(email) {
 		email = email || '';
-		return (email.length > 3 && email.indexOf('@') > -1);
+		return(email.length > 3 && email.indexOf('@') > -1);
 	};
 
 	/**
@@ -109,7 +178,7 @@
 	 **/
 	owner.forgetPassword = function(email, callback) {
 		callback = callback || $.noop;
-		if (!checkEmail(email)) {
+		if(!checkEmail(email)) {
 			return callback('邮箱地址不合法');
 		}
 		return callback(null, '新的随机密码已经发送到您的邮箱，请查收邮件。');
@@ -127,17 +196,17 @@
 	 * 设置应用本地配置
 	 **/
 	owner.getSettings = function() {
-			var settingsText = localStorage.getItem('$settings') || "{}";
-			return JSON.parse(settingsText);
-		}
-		/**
-		 * 获取本地是否安装客户端
-		 **/
+		var settingsText = localStorage.getItem('$settings') || "{}";
+		return JSON.parse(settingsText);
+	}
+	/**
+	 * 获取本地是否安装客户端
+	 **/
 	owner.isInstalled = function(id) {
-		if (id === 'qihoo' && mui.os.plus) {
+		if(id === 'qihoo' && mui.os.plus) {
 			return true;
 		}
-		if (mui.os.android) {
+		if(mui.os.android) {
 			var main = plus.android.runtimeMainActivity();
 			var packageManager = main.getPackageManager();
 			var PackageManager = plus.android.importClass(packageManager)
@@ -148,9 +217,9 @@
 			}
 			try {
 				return packageManager.getPackageInfo(packageName[id], PackageManager.GET_ACTIVITIES);
-			} catch (e) {}
+			} catch(e) {}
 		} else {
-			switch (id) {
+			switch(id) {
 				case "qq":
 					var TencentOAuth = plus.ios.import("TencentOAuth");
 					return TencentOAuth.iphoneQQInstalled();

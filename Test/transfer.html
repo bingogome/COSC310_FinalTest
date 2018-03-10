@@ -50,7 +50,7 @@
 			<form class="mui-input-group">
 				<div class="mui-input-row">
 					<label>From:</label>
-					<input id='fromAccount' type="number" class="mui-input-clear mui-input" placeholder="Please enter target account">
+					<input id='fromAccount' type="number" class="mui-input-clear mui-input" placeholder="Please enter your account">
 				</div>
 				<div class="mui-input-row">
 					<label>To:</label>
@@ -64,9 +64,7 @@
 			<div class="mui-content-padded">
 				<button id='transfer' class="mui-btn mui-btn-block mui-btn-primary">Transfer</button>
 			</div>
-			<div class="mui-content-padded">
-				<p>Registration will be stored in local file</p>
-			</div>
+			
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/app.js"></script>
@@ -97,17 +95,14 @@
 							 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
 							 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
 							 */
-							plus.webview.getLaunchWebview().show("pop-in",200,function () {
-								plus.webview.currentWebview().close("none");
-							});
 							//若启动页不是登录页，则需通过如下方式打开登录页
-//							$.openWindow({
-//								url: 'login.html',
-//								id: 'login',
-//								show: {
-//									aniShow: 'pop-in'
-//								}
-//							});
+							$.openWindow({
+								url: 'transfer_success.html',
+							id: 'transfer_success',
+								show: {
+									aniShow: 'pop-in'
+								}
+							});
 						});
 					});
 				});
