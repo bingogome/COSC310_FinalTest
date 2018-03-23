@@ -174,8 +174,8 @@
 						toMain();
 					} else {
 						app.setState(null);
-						//第三方登录
-						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
+						//Third party login
+						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; 
 						var auths = {};
 						var oauthArea = doc.querySelector('.oauth-area');
 						plus.oauth.getServices(function(services) {
@@ -185,7 +185,6 @@
 								if (~authBtns.indexOf(service.id)) {
 									var isInstalled = app.isInstalled(service.id);
 									var btn = document.createElement('div');
-									//如果微信未安装，则为不启用状态
 									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
 									btn.authId = service.id;
 									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
@@ -194,7 +193,7 @@
 							}
 							$(oauthArea).on('tap', '.oauth-btn', function() {
 								if (this.classList.contains('disabled')) {
-									plus.nativeUI.toast('尚未安装微信客户端');
+									plus.nativeUI.toast('No WeChat installed');
 									return;
 								}
 								var auth = auths[this.authId];
@@ -223,10 +222,10 @@
 					}
 					// close splash
 					setTimeout(function() {
-						//关闭 splash
+						//close splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
-					//检查 "登录状态/锁屏状态" 结束
+					//check login status
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
