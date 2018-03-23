@@ -174,8 +174,8 @@
 						toMain();
 					} else {
 						app.setState(null);
-						//第三方登录
-						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
+						//Third party login
+						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; 
 						var auths = {};
 						var oauthArea = doc.querySelector('.oauth-area');
 						plus.oauth.getServices(function(services) {
@@ -185,7 +185,6 @@
 								if (~authBtns.indexOf(service.id)) {
 									var isInstalled = app.isInstalled(service.id);
 									var btn = document.createElement('div');
-									//如果微信未安装，则为不启用状态
 									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
 									btn.authId = service.id;
 									btn.style.backgroundImage = 'url("images/' + service.id + '.png")'

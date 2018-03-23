@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Transaction History</title>
+<link rel="stylesheet" type="text/css" href="css/style2.css">
+</head>
+
+<body>
+
+<div id="_centent">
+<header>
+	<div class="rt-bk">
+		<i class="bk"></i>
+		<p>返回</p>
+	</div>
+	<div class="top-name"><p>Transaction History</p></div>
+</header>
+
+<div class="head">
+	<div class="head-img">
+    	<img src="img/head-img.png">
+    </div>
+    <div class="head-dsb">
+    	<!--Need data access here-->
+    	<p class="dsb-name">Name</p>
+        <p class="dsb-id">ID</p>
+    </div>
+</div>
+
+<div class="nav">
+	<ul>
+    	<li>
+        	<i class="idt"></i>
+            <p>Graphics</p>
+        </li>
+    	<li class="pt-line">
+        	<i class="idt"></i>
+            <p>History</p>
+        </li>
+  
+</div>
+
+
+
+
+<script>
+	(function (doc, win) {
+	  var docEl = doc.documentElement,
+		resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		recalc = function () {
+		  var clientWidth = docEl.clientWidth;
+		  if (!clientWidth) return;
+		  docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+		};
+
+	  if (!doc.addEventListener) return;
+	  win.addEventListener(resizeEvt, recalc, false);
+	  doc.addEventListener('DOMContentLoaded', recalc, false);
+	})(document, window);
+</script>
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+	$('.check-on').click(function(){
+		$(this).toggleClass('check-off');
+		})
+</script>
+</body>
+</html>
