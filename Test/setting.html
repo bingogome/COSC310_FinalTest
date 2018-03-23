@@ -139,7 +139,6 @@
 	</head>
 
 	<body>
-		<!--页面主结构开始-->
 		<div id="app" class="mui-views">
 			<div class="mui-view">
 				<div class="mui-navbar">
@@ -148,18 +147,13 @@
 				</div>
 			</div>
 		</div>
-		<!--页面主结构结束-->
-		<!--单页面开始-->
 		<div id="setting" class="mui-page">
-			<!--页面标题栏开始-->
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
 				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 					<span class="mui-icon mui-icon-left-nav"></span>
 				</button>
 				<h1 class="mui-center mui-title">Settings</h1>
 			</div>
-			<!--页面标题栏结束-->
-			<!--页面主内容区开始-->
 			<div class="mui-page-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
@@ -190,27 +184,26 @@
 					</div>
 				</div>
 			</div>
-			<!--页面主内容区结束-->
 		</div>
 		<div id="notifications_disturb" class="mui-page">
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
 				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
 					<span class="mui-icon mui-icon-left-nav"></span>Notification
 				</button>
-				<h1 class="mui-center mui-title">功能消息免打扰</h1>
+				<h1 class="mui-center mui-title">Turn off notification</h1>
 			</div>
 			<div class="mui-page-content">
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view mui-table-view-radio">
 							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">开启</a>
+								<a class="mui-navigate-right">Turn on</a>
 							</li>
 							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">只在夜间开启</a>
+								<a class="mui-navigate-right">Only in night</a>
 							</li>
 							<li class="mui-table-view-cell">
-								<a class="mui-navigate-right">关闭</a>
+								<a class="mui-navigate-right">Turn it off</a>
 							</li>
 						</ul>
 					</div>
@@ -221,15 +214,15 @@
 		<div id="lock" class="mui-page">
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
 				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
-					<span class="mui-icon mui-icon-left-nav"></span>设置
+					<span class="mui-icon mui-icon-left-nav"></span>Setting
 				</button>
-				<h1 class="mui-center mui-title">锁屏图案</h1>
+				<h1 class="mui-center mui-title">Pattern Lock</h1>
 			</div>
 			<div class="mui-page-content">
 				<div class="mui-content-padded">
 					<ul class="mui-table-view mui-table-view-chevron">
 						<li class="mui-table-view-cell">
-							使用手势解锁
+							using pattern unlock
 							<div id="lockState" class="mui-switch">
 								<div class="mui-switch-handle"></div>
 							</div>
@@ -244,25 +237,25 @@
 		<div id="feedback" class="mui-page feedback">
 			<div class="mui-navbar-inner mui-bar mui-bar-nav">
 				<button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
-					<span class="mui-icon mui-icon-left-nav"></span>设置
+					<span class="mui-icon mui-icon-left-nav"></span>setting
 				</button>
-				<h1 class="mui-center mui-title">问题反馈</h1>
+				<h1 class="mui-center mui-title">Report a problem</h1>
 			</div>
 			<div class="mui-page-content">
-				<p>问题和意见</p>
+				<p>Problem?</p>
 				<div class="row mui-input-row">
-					<textarea id='question' class="mui-input-clear question" placeholder="请详细描述你的问题和意见..."></textarea>
+					<textarea id='question' class="mui-input-clear question" placeholder="Description..."></textarea>
 				</div>
-				<p>图片(选填,提供问题截图)</p>
+				<p>Screenshot</p>
 				<div id='image-list' class="row image-list">
 				</div>
-				<p>QQ/邮箱</p>
+				<p>email</p>
 				<div class="mui-input-row">
 					<input id='contact' type="text" class="mui-input-clear  contact" placeholder="(选填,方便我们联系你 )" />
 				</div>
-				<button id='submit' type="button" class="mui-btn mui-btn-green">提交</button>
+				<button id='submit' type="button" class="mui-btn mui-btn-green">Submit</button>
 			</div>
-			<p>此示例基于环信 “WebIM SDK” + 环信 “移动客服” 实现，在环信 “移动客服面板” 能够查阅反馈信息。</p>
+			<p> </p>
 		</div>
 
 	</body>
@@ -278,13 +271,10 @@
 	<script src="./js/app.js"></script>
 	<script>
 		mui.init();
-		 //初始化单页view
 		var viewApi = mui('#app').view({
 			defaultPage: '#setting'
 		});
-		 //初始化单页的区域滚动
 		mui('.mui-scroll-wrapper').scroll();
-		 //分享操作 
 		var shares = {};
 		mui.plusReady(function() {
 			plus.share.getServices(function(s) {
@@ -295,10 +285,9 @@
 					}
 				}
 			}, function() {
-				console.log("获取分享服务列表失败");
+				console.log("failed");
 			});
 		});
-		 //分享链接点击事件
 		document.getElementById("share").addEventListener('tap', function() {
 			var ids = [{
 					id: "weixin",
@@ -454,7 +443,7 @@
 				locker.addEventListener('done', function(event) {
 					var rs = event.detail;
 					if (rs.points.length < 4) {
-						plus.nativeUI.toast('设定的手势太简单了');
+						plus.nativeUI.toast('Too simple pattern');
 						record = [];
 						rs.sender.clear();
 						return;
@@ -462,7 +451,7 @@
 					record.push(rs.points.join(''));
 					if (record.length >= 2) {
 						if (record[0] == record[1]) {
-							plus.nativeUI.toast('解锁手势设定成功，以后用户只需使用手势解锁而无需输入密码登录。');
+							plus.nativeUI.toast('Succeed');
 							settings.gestures = record[0];
 							settings.autoLogin = true;
 							app.setSettings(settings);
@@ -470,12 +459,12 @@
 								$.back();
 							}, 200);
 						} else {
-							plus.nativeUI.toast('两次手势不一致,请重新设定');
+							plus.nativeUI.toast('Not the same pattern');
 						}
 						rs.sender.clear();
 						record = [];
 					} else {
-						plus.nativeUI.toast('请确认手势设定');
+						plus.nativeUI.toast('Please confirm pattern');
 						rs.sender.clear();
 					}
 				}, false);
@@ -484,7 +473,6 @@
 		 //********************
 		var view = viewApi.view;
 		(function($) {
-			//处理view的后退与webview后退
 			var oldBack = $.back;
 			$.back = function() {
 				if (viewApi.canBack()) { //如果view可以后退，则执行view的后退
@@ -493,17 +481,13 @@
 					oldBack();
 				}
 			};
-			//监听页面切换事件方案1,通过view元素监听所有页面切换事件，目前提供pageBeforeShow|pageShow|pageBeforeBack|pageBack四种事件(before事件为动画开始前触发)
-			//第一个参数为事件名称，第二个参数为事件回调，其中e.detail.page为当前页面的html对象
 			view.addEventListener('pageBeforeShow', function(e) {
 				//				console.log(e.detail.page.id + ' beforeShow');
 			});
 			view.addEventListener('pageShow', function(e) {
-				//进入手执设定界面时
 				if (e.detail.page.id == 'lock') {
 					var settings = app.getSettings();
 					/*if (!settings.autoLogin) {
-						plus.nativeUI.toast('当前没有启用 “自动登录”，需要在登录时启用 "自动登录"，设定的手势锁屏才会升效。');
 					}*/
 					var lockStateButton = document.getElementById("lockState");
 					var locker = document.querySelector('.mui-locker');

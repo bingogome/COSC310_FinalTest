@@ -194,7 +194,7 @@
 							}
 							$(oauthArea).on('tap', '.oauth-btn', function() {
 								if (this.classList.contains('disabled')) {
-									plus.nativeUI.toast('尚未安装微信客户端');
+									plus.nativeUI.toast('No WeChat installed');
 									return;
 								}
 								var auth = auths[this.authId];
@@ -223,10 +223,10 @@
 					}
 					// close splash
 					setTimeout(function() {
-						//关闭 splash
+						//close splash
 						plus.navigator.closeSplashscreen();
 					}, 600);
-					//检查 "登录状态/锁屏状态" 结束
+					//check login status
 					var loginButton = doc.getElementById('login');
 					var accountBox = doc.getElementById('account');
 					var passwordBox = doc.getElementById('password');
